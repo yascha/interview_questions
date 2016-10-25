@@ -1,0 +1,6 @@
+Implement a program that prints out a multiplication table of size N.  You can ignore the row and column labels.
+
+ie for size 3, your program would print the following:
+1 2 3
+2 4 6
+3 6 9
