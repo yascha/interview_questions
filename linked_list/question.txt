@@ -1,1 +1,0 @@
-Implement a linked list using a stack data structure.

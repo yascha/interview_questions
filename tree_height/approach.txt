@@ -1,7 +1,0 @@
-
-
-In order to find the height of the tree, we need to find the longest subtree.  This requires investigating every node in the tree and necessitates a O(n) solution at best.
-
-I will write a recursive function to return the longest subtree.
-
-For testing, I will reuse the binary tree implementation that I created in the binary_tree folder.
