@@ -1,0 +1,1 @@
+The question doesn't specifically say the requirements for where each node has to be in the flattened list, so I will flatten it in such a way that all of the top level nodes are first in the flattened list and then the second-level children are next and so on.
