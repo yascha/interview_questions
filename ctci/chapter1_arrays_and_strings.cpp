@@ -191,3 +191,76 @@ int test_urlify()
 
 
 
+/* 1.4 Palindrome Permutation
+ * Given a string, write a function to check if it is a permutation of a
+ * palindrome.  A palindrome is a word or phrase that is the same forwards
+ * and backwards.  A premutation is a rearrangement of letters.  The
+ * palindrome does not need to be limited to just dictionary words.
+ * ie. Input:  Tact Coa
+ * Output: True ("taco cat", "atco cta", etc.)
+ */
+
+/* Approach:
+ * The problem doesn't ask us to compute the palindromes, just to confirm
+ * if the input string can be made into palindromes.  We know that all
+ * palindromes have an even number of each character (except 1 in the middle).
+ * As such, we can inspect the characters of the input string to determine
+ * if it meets the criteria (<= 1 char with an odd number of instances).
+ */
+
+bool palindrome_permutation(string str)
+{
+	std::map<char, int> str_map;
+	string::const_iterator str_iter = str.begin();
+	string::const_iterator str_iter_end = str.end();
+
+	// count the instances of each character and store them in str_map
+	while (str_iter != str_iter_end)
+	{
+		str_map[*str_iter] += 1;
+		str_iter++;
+	}
+
+	// if we find more than 1 character with an odd number
+	// of instances, return false
+	map<char, int>::const_iterator map_iter = str_map.begin();
+	map<char, int>::const_iterator map_iter_end = str_map.end();
+	int num_odd_instances;
+	while (map_iter != map_iter_end)
+	{
+		if (map_iter->second % 2 != 0)
+		{
+			num_odd_instances++;
+			if (num_odd_instances > 1)
+			{
+				break;
+			}
+		}
+		map_iter++;
+	}
+
+	if (num_odd_instances > 1)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+
+int main()
+{
+	string test = "TacTcoa";
+	if (palindrome_permutation(test))
+	{
+		cout << "String \"" << test << "\" is a palindrome permutation."
+				<< endl;
+	}
+	else
+	{
+		cout << "String \"" << test << "\" is not a palindrome :(" << endl;
+	}
+	return 0;
+}
