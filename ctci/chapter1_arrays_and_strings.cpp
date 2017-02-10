@@ -250,7 +250,7 @@ bool palindrome_permutation(string str)
 }
 
 
-int main()
+int test_palindrome_permutation()
 {
 	string test = "TacTcoa";
 	if (palindrome_permutation(test))
