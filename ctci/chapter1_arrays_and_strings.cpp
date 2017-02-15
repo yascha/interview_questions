@@ -90,8 +90,8 @@ bool check_permutation(string str1, string str2)
 	// super efficient, but since we are manipulating (sorting)
 	// the data, it is necessary here.
 
-	sort(str1.begin(), str1.end());
-	sort(str2.begin(), str2.end());
+	std::sort(str1.begin(), str1.end());
+	std::sort(str2.begin(), str2.end());
 
 	string::size_type index = 0;
 	while (index != str1.size())
@@ -262,5 +262,134 @@ int test_palindrome_permutation()
 	{
 		cout << "String \"" << test << "\" is not a palindrome :(" << endl;
 	}
+	return 0;
+}
+
+
+/*
+ * 1.5 One Away
+ * There are three types of operations that can be performed on
+ * a given string: insert a character, remove a character, or
+ * replace a character.
+ * Given 2 strings, write a function to determine if they are
+ * 1 edit away.
+ */
+
+/*
+ * Approach:
+ * We can iterate over both strings comparing the characters.
+ * As soon as we encounter a mis-match character, we can branch
+ * off into 3 analyses: add a character, remove a character, and
+ * replace a character.  If none of these approaches succeed, then
+ * we are not 1 edit away.
+ */
+
+
+typedef string::const_iterator iter;
+bool compareToFailure(iter s1, iter s1_end, iter s2, iter s2_end)
+{
+	while (s1 != s1_end && s2 != s2_end && *s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
+	if (s1 == s1_end && s2 == s2_end)
+	{
+		return true;
+	}
+	return false;
+}
+
+
+bool one_away(string s1, string s2)
+{
+	string::iterator i1 = s1.begin();
+	string::iterator i2 = s2.begin();
+
+	while (i1 != s1.end() && i2 != s2.end() && *i1 == *i2)
+	{
+		i1++;
+		i2++;
+	}
+	if (i1 == s1.end() && i2 == s2.end())
+	{
+		return true;
+	}
+	else
+	{
+		string::size_type s1_size = s1.size();
+		string::size_type s2_size = s2.size();
+
+		if (s1_size == s2_size)
+		{
+			// try replace string 1 char
+			char old_i1 = *i1;
+			*i1 = *i2;
+			if (compareToFailure(i1, s1.end(), i2, s2.end()))
+			{
+				cout << "Replacing a char from string 1 worked.\n";
+				return true;
+			}
+
+			*i1 = old_i1;
+
+			// try replace string 2 char
+			*i2 = *i1;
+			if (compareToFailure(i1, s1.end(), i2, s2.end()))
+			{
+				cout << "Replacing a char from string 2 worked.\n";
+				return true;
+			}
+		}
+		else if ((s1_size + 1) == s2_size)
+		{
+			// try add string 1 char
+			i1 = s1.insert(i1, *i2);
+			if (compareToFailure(i1, s1.end(), i2, s2.end()))
+			{
+				cout << "Adding a char to string 1 worked.\n";
+				return true;
+			}
+			s2.erase(i2);
+
+			// try remove string 2 char
+
+
+		}
+		else if (s1_size == (s2_size + 1))
+		{
+			// try add string 2 char
+			i2 = s2.insert(i2, *i1);
+			if (compareToFailure(i1, s1.end(), i2, s2.end()))
+			{
+				cout << "Adding a char to string 2 worked.\n";
+				return true;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+	return false;
+}
+
+
+
+int test_one_away()
+{
+	string s1 = "abc";
+	string s2 = "abxc";
+
+	cout << s1 + " and " + s2 << endl;
+	if (one_away(s1, s2))
+	{
+		cout << "yes" << endl;
+	}
+	else
+	{
+		cout << "no" << endl;
+	}
+
 	return 0;
 }
