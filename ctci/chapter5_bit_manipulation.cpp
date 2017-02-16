@@ -142,3 +142,38 @@ int test_flip_bit_to_win()
 	return 0;
 }
 
+
+/*
+ * 5.6 Conversion
+ * Write a program that calculates the number of bits you would have to
+ * flip to convert and integer A into an integer B.
+ * ie.  input: a = 29 (11101), b = 15 (01111)
+ * output: 2 (need to flip 2 bits)
+ */
+
+int conversion(int a, int b)
+{
+	int num_bits_to_flip = 0;
+
+	int mask = 1;
+
+	for (int i = 0; i < 32; i++)
+	{
+		if ((a&mask) != (b&mask))
+		{
+			num_bits_to_flip++;
+		}
+		mask <<= 1;
+	}
+
+
+	return num_bits_to_flip;
+}
+
+
+int test_conversion()
+{
+
+	cout << conversion(29, 15) << endl;
+	return 0;
+}
