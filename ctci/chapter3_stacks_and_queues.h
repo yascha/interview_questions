@@ -16,6 +16,42 @@
 #include <memory> // for allocator
 #include <list> // for list
 #include <iterator> // for cost_iterator
+#include <climits>
+
+// For 3.2 min stack
+
+typedef struct node
+{
+	struct node* next;
+	int data;
+} Node;
+
+class MinStack
+{
+public:
+	bool push(int data);
+	int pop();
+	MinStack()
+	{
+		head = NULL;
+		min = INT_MAX;
+	}
+	void printMin();
+
+
+
+private:
+	Node* head;
+	int min;
+
+	void updateMin();
+
+};
+
+
+
+
+// For shelter
 
 enum AnimalType {DOG, CAT, MAX_ANIMAL_TYPE};
 

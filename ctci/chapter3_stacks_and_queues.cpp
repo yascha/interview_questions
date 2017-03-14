@@ -18,10 +18,113 @@
 #include <list>
 #include <algorithm>
 #include <iterator>
+#include <climits>
 
 // Chapter 3
 
 using namespace std;
+
+
+/*
+ * 3.2 Stack Min
+ * Implement a stack that supports a O(1) min() function.
+ * Needs to support: push(), pop(), and min()
+ */
+
+
+bool MinStack::push(int data)
+{
+	Node* temp = new Node;
+	if (!temp)
+	{
+		return false;
+	}
+
+	if (head != NULL)
+	{
+		temp->next = head;
+	}
+	else
+	{
+		temp->next = NULL;
+	}
+
+	temp->data = data;
+
+	if (data < min)
+	{
+		min = data;
+	}
+
+	head = temp;
+	return true;
+}
+
+int MinStack::pop()
+{
+	int returnValue;
+
+	// Return -1 if we haven't been initialized
+	Node* temp = head;
+	if (!temp)
+	{
+		return -1;
+	}
+
+	// Get the return data from head, update head, free head
+	returnValue = head->data;
+	head = head->next;
+	free(temp);
+
+	// update min if necessary
+	if (returnValue == min)
+	{
+		updateMin();
+	}
+
+	return returnValue;
+}
+
+void MinStack::updateMin()
+{
+	int currentMin = INT_MAX;
+	while(head != NULL)
+	{
+		if (head->data < currentMin)
+		{
+			currentMin = head->data;
+		}
+		head = head->next;
+	}
+	min = currentMin;
+}
+
+void MinStack::printMin()
+{
+	cout << min << endl;
+}
+
+
+int test_minstack()
+{
+	MinStack m;
+	m.printMin();
+
+	m.push(5);
+	m.printMin();
+
+
+	m.push(3);
+	m.printMin();
+
+	m.pop();
+	m.printMin();
+
+	return 0;
+}
+
+
+
 
 /*
  * 3.6 Animal Shelter
@@ -133,7 +236,7 @@ Animal Shelter::dequeueCat()
 
 
 
-int main()
+int test_animal_shelter()
 {
 	Shelter shel;
 	Animal bob = Animal(DOG, "bob");
