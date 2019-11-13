@@ -1,7 +1,7 @@
 //Kadane's Algorithm
 //Given an array arr of N integers. Find the contiguous sub-array with maximum sum.
 
-// Yascha's handicap:: do it using only a list with iterators and no direct access to the array
+// Yascha's difficulty mode:: do it using only a list with iterators and no direct access to the array
 
 #include <iostream>
 #include <list>
@@ -55,6 +55,7 @@ void findSubArray (list<int> myList)
     it++;
   }
   
+  cout << "Using only a singly linked list:" << endl;
   cout << "Biggest sum found is: " << currentBiggestSubArray.sum << endl;
   cout << "[" << currentBiggestSubArray.startingIndex << ", " << currentBiggestSubArray.endingIndex << "]" << endl;
 }
@@ -62,11 +63,50 @@ void findSubArray (list<int> myList)
 
 
 
-
+void findSubArray(int myList[], int size)
+{
+  
+  subArray currentBiggestSubArray;
+  currentBiggestSubArray.startingIndex = 0;
+  currentBiggestSubArray.endingIndex = 0;
+  currentBiggestSubArray.sum = 0;
+  
+  for (int i = 0; i < size; i++)
+  {
+    for (int j = 1; j + i <= size; j++)
+    {
+      int currentSum = 0;
+      for (int k = 0; k < j; k++)
+      {
+        currentSum += myList[i+k];
+        if (currentSum > currentBiggestSubArray.sum)
+        {
+          currentBiggestSubArray.startingIndex = i;
+          currentBiggestSubArray.endingIndex = i+k;
+          currentBiggestSubArray.sum = currentSum;
+        }
+      }
+    }
+  }
+  cout << "Using direct access:" << endl;
+  cout << "Biggest sum found is: " << currentBiggestSubArray.sum << endl;
+  cout << "[" << currentBiggestSubArray.startingIndex << ", " << currentBiggestSubArray.endingIndex << "]" << endl;
+}
 
 int main()
 {
   list<int> myList = { 15, -21, 2, 4, -1, -2, 35, -5, 12, -1, -5, -5, -5, -5, 5, -3, 66, 5, -5, 0001,-25, 25, -7 };
-  findSubArray(myList);
   
+  size_t arrayListSize = myList.size();
+  int arrayList[arrayListSize];
+  int index = 0;
+  for (const int &i : myList)
+  {
+    arrayList[index] = i;
+    index++;
+  }
+  
+  findSubArray(myList);
+  cout << endl;
+  findSubArray(arrayList, arrayListSize);
 }
